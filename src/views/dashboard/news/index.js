@@ -71,10 +71,24 @@ class News extends Component {
           >
             {main}
           </Text>
-          <Text style={{ fontSize: 14, fontWeight: "400", marginLeft: 10, marginTop: 10 }}>
+          <Text
+            style={{
+              fontSize: 14,
+              fontWeight: "400",
+              marginLeft: 10,
+              marginTop: 10
+            }}
+          >
             {source}
           </Text>
-          <Text style={{ fontSize: 14, fontWeight: "400", marginLeft: 10 , marginTop: 5}}>
+          <Text
+            style={{
+              fontSize: 14,
+              fontWeight: "400",
+              marginLeft: 10,
+              marginTop: 5
+            }}
+          >
             {date}
           </Text>
           <Image
@@ -94,7 +108,7 @@ class News extends Component {
 
   render() {
     const {
-      dashboard: { newsData, loading },
+      dashboard: { newsData, loading, sortNewsData },
       dashboardNewsAction
     } = this.props;
     console.warn("loading", loading);
@@ -161,6 +175,7 @@ class News extends Component {
                 alignItems: "center",
                 flex: 1
               }}
+              onPress={() => dashboardNewsAction.sortB()}
             >
               <Text
                 style={{
@@ -178,7 +193,7 @@ class News extends Component {
           ) : (
             <FlatList
               data={newsData}
-              extraData={newsData}
+              extraData={newsData || sortNewsData}
               keyExtractor={(item, key) => item + key}
               renderItem={({ item, index }) => this.renderItem(item, index)}
               showsVerticalScrollIndicator={false}

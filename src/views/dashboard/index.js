@@ -31,9 +31,17 @@ class Dashboard extends Component {
 
   _search = val => {
     const { category } = this.state;
-    const { dashboardNewsAction } = this.props;
+    const { dashboardNewsAction, dashboardBooksAction } = this.props;
     if (category === "news") {
       dashboardNewsAction.request(val);
+    } else {
+      dashboardBooksAction.request(
+        val
+          .toString()
+          .trim()
+          .toLowerCase()
+          .replace(/ /g, "-")
+      );
     }
   };
 

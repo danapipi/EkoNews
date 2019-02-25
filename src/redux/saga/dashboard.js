@@ -7,7 +7,7 @@ import {
   BOOKS_ACTIONS
 } from "../modules/dashboard";
 
-function* newsRequestSaga({payload}) {
+function* newsRequestSaga({ payload }) {
   try {
     const {
       data: {
@@ -20,10 +20,15 @@ function* newsRequestSaga({payload}) {
   }
 }
 
-function* booksRequestSaga({ payload: { query } }) {
+function* booksRequestSaga({ payload }) {
   try {
-    const { data } = yield call(bookLists.review, query);
-    yield put(booksActions.fulfilled({ listBooks: data }));
+    const {
+      data: {
+        results: { books }
+      }
+    } = yield call(bookLists.review, payload);
+    console.warn("data buku", books);
+    yield put(booksActions.fulfilled({ listBooks: books }));
   } catch (error) {
     yield put(booksActions.rejected(error.response));
   }

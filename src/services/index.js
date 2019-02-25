@@ -11,5 +11,5 @@ export const articleSearch = {
 
 export const bookLists = {
   review: query =>
-    books.get(`/v3/list/current/${query}.json?api-key=${API_KEY}`)
+    books.get(`/v3/lists/current/${query}.json?api-key=${API_KEY}`)
 };

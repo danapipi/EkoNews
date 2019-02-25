@@ -24,22 +24,18 @@ export const newsActions = Object.freeze({
     payload: newsData
   }),
   rejected: message => ({ type: NEWS_ACTIONS.REJECTED, payload: { message } }),
-  sortA: sort => ({
-    type: NEWS_ACTIONS.SORT_A,
-    sort
+  sortA: () => ({
+    type: NEWS_ACTIONS.SORT_A
   }),
-  sortB: sort => ({
-    type: NEWS_ACTIONS.SORT_B,
-    sort
+  sortB: () => ({
+    type: NEWS_ACTIONS.SORT_B
   })
 });
 
 export const booksActions = Object.freeze({
-  request: ({ query }) => ({
+  request: query => ({
     type: BOOKS_ACTIONS.REQUEST,
-    payload: {
-      query
-    }
+    payload: query
   }),
   fulfilled: listBooks => ({
     type: BOOKS_ACTIONS.FULFILLED,
@@ -88,8 +84,7 @@ export default (state = initialState, { type, payload }) => {
     case BOOKS_ACTIONS.REQUEST:
       return {
         ...state,
-        loading: true,
-        query: payload.query
+        loading: true
       };
     case BOOKS_ACTIONS.FULFILLED:
       return {
@@ -105,11 +100,3 @@ export default (state = initialState, { type, payload }) => {
 };
 
 export const dashboardSelect = state => state.dashboard;
-export const dataNewsSortASelect = state =>
-  state.dashboard.newsData.sort(
-    (a, b) => new Date(b.pub_date) - new Date(a.pub_date)
-  );
-export const dataNewsSortBSelect = state =>
-  state.dashboard.newsData.sort(
-    (a, b) => new Date(a.pub_date) - new Date(b.pub_date)
-  );
