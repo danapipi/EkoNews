@@ -111,7 +111,6 @@ class News extends Component {
       dashboard: { newsData, loading, sortNewsData },
       dashboardNewsAction
     } = this.props;
-    console.warn("loading", loading);
     return (
       <ScrollView
         style={{ marginBottom: 150, flex: 1 }}

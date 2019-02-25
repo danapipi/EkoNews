@@ -27,7 +27,6 @@ function* booksRequestSaga({ payload }) {
         results: { books }
       }
     } = yield call(bookLists.review, payload);
-    console.warn("data buku", books);
     yield put(booksActions.fulfilled({ listBooks: books }));
   } catch (error) {
     yield put(booksActions.rejected(error.response));
