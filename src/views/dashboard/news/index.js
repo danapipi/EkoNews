@@ -10,18 +10,12 @@ import {
 } from "react-native";
 import { color } from "../../../assets";
 import { connect } from "react-redux";
+import moment from "moment";
 import { bindActionCreators } from "redux";
-import {
-  dashboardSelect,
-  newsActions,
-  dataNewsSortASelect,
-  dataNewsSortBSelect
-} from "../../../redux/modules/dashboard";
+import { dashboardSelect, newsActions } from "../../../redux/modules/dashboard";
 
 const mapStateToProps = state => ({
-  dashboard: dashboardSelect(state),
-  sortA: dataNewsSortASelect(state),
-  sortB: dataNewsSortBSelect(state)
+  dashboard: dashboardSelect(state)
 });
 const mapDispatchToProps = dispatch => ({
   dashboardNewsAction: bindActionCreators(newsActions, dispatch)
@@ -44,60 +38,71 @@ class News extends Component {
     } = item;
     const img = multimedia.map(index => index.url);
     const uriImg = `https://www.nytimes.com/${img[index]}`;
+    const date = moment(pub_date).format("DD MMM YYYY");
     return (
-      <View
-        style={{
-          marginLeft: 0,
-          marginTop: 10,
-          flex: 1,
-          height: 200,
-          width: "98%",
-          backgroundColor: color.white,
-          borderTopRightRadius: 15,
-          borderBottomRightRadius: 15
+      <TouchableOpacity
+        onPress={() => {
+          const { navigation } = this.props;
+          navigation.navigate("Details", { web: web_url });
         }}
+        style={{}}
       >
-        <Text
+        <View
           style={{
-            fontSize: 16,
-            fontWeight: "600",
-            textAlign: "left",
-            marginRight: 5,
-            marginLeft: 10,
-            marginTop: 10
-          }}
-        >
-          {main}
-        </Text>
-        <Text style={{ fontSize: 14, fontWeight: "400", marginLeft: 10 }}>
-          {source}
-        </Text>
-        <Text style={{ fontSize: 14, fontWeight: "400", marginLeft: 10 }}>
-          {pub_date}
-        </Text>
-        <Image
-          source={{ uri: uriImg }}
-          style={{
-            width: "100%",
-            height: "70%",
-            marginBottom: 20,
+            marginLeft: 0,
+            marginTop: 10,
+            flex: 1,
+            height: 250,
+            width: "98%",
+            backgroundColor: color.white,
+            borderTopRightRadius: 15,
             borderBottomRightRadius: 15
           }}
-          resizeMode="cover"
-        />
-      </View>
+        >
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: "600",
+              textAlign: "left",
+              marginRight: 5,
+              marginLeft: 10,
+              marginTop: 10
+            }}
+          >
+            {main}
+          </Text>
+          <Text style={{ fontSize: 14, fontWeight: "400", marginLeft: 10, marginTop: 10 }}>
+            {source}
+          </Text>
+          <Text style={{ fontSize: 14, fontWeight: "400", marginLeft: 10 , marginTop: 5}}>
+            {date}
+          </Text>
+          <Image
+            source={{ uri: uriImg }}
+            style={{
+              width: "100%",
+              height: "50%",
+              marginTop: 20,
+              borderBottomRightRadius: 15
+            }}
+            resizeMode="cover"
+          />
+        </View>
+      </TouchableOpacity>
     );
   };
 
   render() {
     const {
       dashboard: { newsData, loading },
-      sortA,
-      sortB
+      dashboardNewsAction
     } = this.props;
     console.warn("loading", loading);
     return (
-      <ScrollView style={{ marginBottom: 10, flex: 1 }}>
+      <ScrollView
+        style={{ marginBottom: 150, flex: 1 }}
+        showsVerticalScrollIndicator={false}
+      >
         <View
           style={{
             flex: 1,
@@ -107,7 +112,7 @@ class News extends Component {
           <View
             style={{
               flexDirection: "row",
-              backgroundColor: color.tertiary,
+              backgroundColor: color.secondary,
               width: "90%",
               borderTopRightRadius: 15,
               borderBottomRightRadius: 15,
@@ -132,11 +137,11 @@ class News extends Component {
             <TouchableOpacity
               style={{
                 marginHorizontal: 5,
-                borderRightWidth: 0.5,
                 flex: 1,
-                borderRightWidth: 0.3
+                borderRightWidth: 0.3,
+                borderRightColor: color.white
               }}
-              onPress={sortA}
+              onPress={() => dashboardNewsAction.sortA()}
             >
               <Text
                 style={{
@@ -156,7 +161,6 @@ class News extends Component {
                 alignItems: "center",
                 flex: 1
               }}
-              onPress={sortB}
             >
               <Text
                 style={{

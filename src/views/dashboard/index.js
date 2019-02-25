@@ -41,7 +41,7 @@ class Dashboard extends Component {
     const { category } = this.state;
     return (
       <View>
-        <View style={{ backgroundColor: color.quinary }}>
+        <View style={{ backgroundColor: color.primary }}>
           <View
             style={{
               flexDirection: "row",

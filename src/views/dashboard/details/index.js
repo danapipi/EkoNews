@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { WebView } from "react-native";
 
 export default class Details extends Component {
   constructor(props) {
@@ -8,10 +8,7 @@ export default class Details extends Component {
   }
 
   render() {
-    return (
-      <View>
-        <Text> textInComponen Details </Text>
-      </View>
-    );
+    const { web } = this.props.navigation.state.params;
+    return <WebView source={{ uri: web }} />;
   }
 }

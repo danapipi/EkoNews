@@ -4,7 +4,8 @@ export const NEWS_ACTIONS = Object.freeze({
   REQUEST: `${APP_NAME}/news/request`,
   FULFILLED: `${APP_NAME}/news/fulfilled`,
   REJECTED: `${APP_NAME}/news/rejected`,
-  SORT: `${APP_NAME}/news/sort`
+  SORT_A: `${APP_NAME}/news/sortA`,
+  SORT_B: `${APP_NAME}/news/sortB`
 });
 
 export const BOOKS_ACTIONS = Object.freeze({
@@ -23,8 +24,12 @@ export const newsActions = Object.freeze({
     payload: newsData
   }),
   rejected: message => ({ type: NEWS_ACTIONS.REJECTED, payload: { message } }),
-  sort: sort => ({
-    type: NEWS_ACTIONS.SORT,
+  sortA: sort => ({
+    type: NEWS_ACTIONS.SORT_A,
+    sort
+  }),
+  sortB: sort => ({
+    type: NEWS_ACTIONS.SORT_B,
     sort
   })
 });
@@ -66,10 +71,19 @@ export default (state = initialState, { type, payload }) => {
       };
     case NEWS_ACTIONS.REJECTED:
       return { ...state, loading: false, message: payload.message };
-    case NEWS_ACTIONS.SORT:
+    case NEWS_ACTIONS.SORT_A:
       return {
         ...state,
-        sortNewsData: payload.sort
+        sortNewsData: state.newsData
+          .splice()
+          .sort((a, b) => new Date(b.pub_date) - new Date(a.pub_date))
+      };
+    case NEWS_ACTIONS.SORT_B:
+      return {
+        ...state,
+        sortNewsData: state.newsData
+          .splice()
+          .sort((a, b) => new Date(a.pub_date) - new Date(b.pub_date))
       };
     case BOOKS_ACTIONS.REQUEST:
       return {
@@ -92,10 +106,10 @@ export default (state = initialState, { type, payload }) => {
 
 export const dashboardSelect = state => state.dashboard;
 export const dataNewsSortASelect = state =>
-  state.dashboard.newsData
-    .splice()
-    .sort((a, b) => new Date(b.pub_date) - new Date(a.pub_date));
+  state.dashboard.newsData.sort(
+    (a, b) => new Date(b.pub_date) - new Date(a.pub_date)
+  );
 export const dataNewsSortBSelect = state =>
-  state.dashboard.newsData
-    .splice()
-    .sort((a, b) => new Date(a.pub_date) - new Date(b.pub_date));
+  state.dashboard.newsData.sort(
+    (a, b) => new Date(a.pub_date) - new Date(b.pub_date)
+  );

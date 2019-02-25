@@ -1,9 +1,9 @@
 export const color = {
-  primary: "#d2f1e4",
-  secondary: "#fbcaef",
-  tertiary: "#f865b0",
-  quarternary: "#e637bf",
-  quinary: "#48304d",
+  primary: "#AEADF0",
+  secondary: "#d8dcff",
+  tertiary: "#a76571",
+  quarternary: "#c38d94",
+  quinary: "#565676",
   white: "#FFFFFF",
   black: "#000000",
   grey: "#edeeef"
