@@ -7,14 +7,13 @@ import {
   BOOKS_ACTIONS
 } from "../modules/dashboard";
 
-function* newsRequestSaga({ payload: { query } }) {
+function* newsRequestSaga({payload}) {
   try {
     const {
       data: {
         response: { docs }
       }
-    } = yield call(articleSearch.newsArticle, query);
-    console.warn("data news", query);
+    } = yield call(articleSearch.newsArticle, payload);
     yield put(newsActions.fulfilled({ newsData: docs }));
   } catch (error) {
     yield put(newsActions.rejected(error));
